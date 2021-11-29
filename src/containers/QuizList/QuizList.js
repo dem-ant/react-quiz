@@ -2,8 +2,7 @@ import React, {Component} from "react"
 import { NavLink } from "react-router-dom"
 import classes from './QuizList.module.css'
 import axios from '../../axios/axiosQuiz'
-import map from 'lodash/map'
-import Loader from "../../components/UI/Loader/Loader"
+import Loader from '../../components/UI/Loader/Loader'
 
 export default class QuizList extends Component {
 
@@ -27,15 +26,13 @@ export default class QuizList extends Component {
   async componentDidMount() {
     try {
       const response = await axios.get('quizes.json')
-
       const quizes = []
-      for (const key in response.data) {
+      Object.keys(response.data).forEach((key, index) => {
         quizes.push({
           id: key,
-          name: map(response.data[key], 'question')
+          name: `Тест №${index + 1}`
         })
-      }
-
+      })
       this.setState({
         quizes,
         loading: false
